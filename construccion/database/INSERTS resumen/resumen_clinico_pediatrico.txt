@@ -1,0 +1,60 @@
+INSERT INTO dFechaExpediente (fex_fxp, fac_fxp) VALUES (now(), now());
+
+SELECT @lastIDF := LAST_INSERT_ID();
+
+
+INSERT INTO dResumenClinico (idE_cln, idH_cln, idN_cln, idL_cln, idF_cln) VALUES (1, 1, 1, 1, @lastIDF);
+
+SELECT @lastIDM := LAST_INSERT_ID();
+
+INSERT INTO dPlanManejo (pln_plm, idM_plm) VALUES ("El plan de manejo pediatrico", @lastIDM);
+
+INSERT INTO dOptometria (rod_opt, roi_opt, edl_opt, mcn_opt, utr_opt, idM_opt) VALUES 
+                                                ("Graduacion pediaOD", "Graduacion pediaOI", 5, "Motivo consulta pediatr", '2015-08-23 12:08:00', @lastIDM);
+
+
+INSERT INTO dOftalmoscopiaDirecta (med_ofd, epp_ofd, clp_ofd, vss_ofd, mcl_ofd, rtp_ofd) VALUES 
+                                    ("Medios pediatricos", 23, "color pediatrico", "Vasitos pediatri", "macula pediatrica", "otro dato pediatrico");
+
+
+SELECT @lastDOF1 := LAST_INSERT_ID();
+
+INSERT INTO dPruebasPreliminares (acv_pru, scc_pru, cvv_pru, aoo_pru, ccc_pru, pup_pru) VALUES ("acvPediatrico", "sccPediatrico", "cvvPediatrico", "aooPediatrico", "cccPediatrico", "pupPediatrico");
+
+SELECT @lastIDY1 := LAST_INSERT_ID();
+
+INSERT INTO dPruPrelPediatra (meo_ppp, hib_ppp, lcw_ppp, ctt_ppp, idY_ppp) VALUES ("meoPediatrico", "hibPediatrico", "lcwPediatrico", "cttPediatrico", @lastIDY1);
+
+INSERT INTO dGraduacion (gra_grd_1, gra_grd_2, gra_grd_3) VALUES ("gradPedia1", "gradPedia2", "gradPedia3");
+
+SELECT @lastGRD1 := LAST_INSERT_ID();
+
+INSERT INTO dOjoDerecho (dxr_ojd, dxo_ojd, ref_ojd, dgr_ojd, dof_ojd, idY_ojd) VALUES ("dxrPedia", "dxoPedia", "refPedia", @lastGRD1, @lastDOF1, @lastIDY1);
+
+SELECT @lastIDW := LAST_INSERT_ID();
+
+
+INSERT INTO dOftalmoscopiaDirecta (med_ofd, epp_ofd, clp_ofd, vss_ofd, mcl_ofd, rtp_ofd) VALUES 
+                        ("Medios pedia2", 23, "color pedia2", "Vasitos pedia 2", "macula pedia 2", "rtp pedia 2");
+
+SELECT @lastDOF2 := LAST_INSERT_ID();
+
+INSERT INTO dPruebasPreliminares (acv_pru, scc_pru, cvv_pru, aoo_pru, ccc_pru, pup_pru) VALUES ("acvPedia 2", "sccPedia 2", "cvvPedia 2", "aooPedia 2", "cccPedia 2", "pupPedia 2");
+
+SELECT @lastIDY2 := LAST_INSERT_ID();
+
+INSERT INTO dPruPrelPediatra (meo_ppp, hib_ppp, lcw_ppp, ctt_ppp, idY_ppp) VALUES ("meo pedia 2", "hib pedia 2", "lcw pedia 2", "ctt pedia 2", @lastIDY2);
+
+INSERT INTO dGraduacion (gra_grd_1, gra_grd_2, gra_grd_3) VALUES ("grad2 Pedia_1", "grad2 Pedia_2", "grad2 Pedia_3");
+
+SELECT @lastGRD2 := LAST_INSERT_ID();
+
+INSERT INTO dOjoIzquierdo (dxr_oji, dxo_oji, ref_oji, dgr_oji, dof_oji, idY_oji) VALUES ("dxrPedia 2", "dxoPedia 2", "refPedia 2", @lastGRD2, @lastDOF2, @lastIDY2);
+
+SELECT @lastIDZ := LAST_INSERT_ID();
+
+
+INSERT INTO dDiagnostico (foo_dia, nog_dia, hra_dia, idM_dia, idW_dia, idZ_dia) VALUES 
+            ("Dosis pediatrica", 3, '15:00:00', @lastIDM, @lastIDW, @lastIDZ);
+
+

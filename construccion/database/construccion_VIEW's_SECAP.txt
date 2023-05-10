@@ -1,0 +1,83 @@
+CREATE VIEW vDatosContactoPaciente AS
+SELECT
+
+CONCAT(l.nom_pte, ' ', l.app_pte, ' ', l.apm_pte) AS nombrePaciente, 
+(YEAR(CURDATE())-YEAR(l.fhn_pte)) - (RIGHT(CURDATE(),5)<RIGHT(l.fhn_pte,5)) AS edad,
+c.tel_con AS telefono, c.mal_con AS email, c.fbk_con AS facebook
+
+FROM mPaciente AS l
+INNER JOIN dContacto AS c ON l.idC_pte=c.idC_con
+ORDER BY l.nom_pte;
+
+
+
+CREATE VIEW vExpedientesPediatricos AS
+SELECT
+n.idN_exp AS idExpediente, n.fol_exp AS folio, f.idF_fxp AS idFechaExpediente, f.fex_fxp AS fechaExpedicion, f.fac_fxp AS fechaActualizacion,
+l.idL_pte AS idPaciente, l.nom_pte AS nomPaciente, l.app_pte AS apellidoPaterno, l.apm_pte AS apellidoMaterno, l.ocp_pte AS ocupacion, 
+l.fhn_pte AS fechaNacimiento, (YEAR(CURDATE())-YEAR(l.fhn_pte)) - (RIGHT(CURDATE(),5)<RIGHT(l.fhn_pte,5)) AS edad, l.idO_pte AS idSexo,
+c.idC_con AS idContacto, c.dom_con AS domicilio, c.tel_con AS telefono, c.tel_con_2 AS telefono2, c.mal_con AS email, c.fbk_con AS facebook, 
+h.idH_atm AS idAntecedenteMed, h.enf_atm AS enfermedad, h.med_atm AS medicamento, h.alg_atm AS alergia, 
+k.idK_atp AS idAntecedentePediatrico, k.tmg_atp AS tiempoGestacion, k.cpl_atp AS complicacion, k.inc_atp AS incubadora, k.idT_atp AS tipoParto
+
+FROM mPaciente AS l
+INNER JOIN dContacto AS c ON l.idC_pte=c.idC_con
+INNER JOIN dExpediente AS n ON n.idL_exp=l.idL_pte
+INNER JOIN dFechaExpediente AS f ON f.idF_fxp=n.idF_exp
+INNER JOIN dAntecedenteMed AS h ON n.idN_exp=h.idN_atm
+INNER JOIN dAntecedenteMedPed AS k ON h.idH_atm=k.idH_atp
+
+ORDER BY l.idL_pte;
+
+
+
+
+CREATE VIEW vExpedientesAG AS
+SELECT
+n.idN_exp AS idExpediente, n.fol_exp AS folio, f.idF_fxp AS idFechaExpediente, f.fex_fxp AS fechaExpedicion, f.fac_fxp AS fechaActualizacion,
+l.idL_pte AS idPaciente, l.nom_pte AS nomPaciente, l.app_pte AS apellidoPaterno, l.apm_pte AS apellidoMaterno, l.ocp_pte AS ocupacion, 
+l.fhn_pte AS fechaNacimiento, (YEAR(CURDATE())-YEAR(l.fhn_pte)) - (RIGHT(CURDATE(),5)<RIGHT(l.fhn_pte,5)) AS edad, l.idO_pte AS idSexo,
+c.idC_con AS idContacto, c.dom_con AS domicilio, c.tel_con AS telefono, c.tel_con_2 AS telefono2, c.mal_con AS email, c.fbk_con AS facebook, 
+h.idH_atm AS idAntecedenteMed, h.enf_atm AS enfermedad, h.med_atm AS medicamento, h.alg_atm AS alergia, 
+q.idQ_aag AS idAntecedenteAG, q.taa_aag AS TA, q.ngg_aag AS NG
+
+FROM mPaciente AS l
+INNER JOIN dContacto AS c ON l.idC_pte=c.idC_con
+INNER JOIN dExpediente AS n ON n.idL_exp=l.idL_pte
+INNER JOIN dFechaExpediente AS f ON f.idF_fxp=n.idF_exp
+INNER JOIN dAntecedenteMed AS h ON n.idN_exp=h.idN_atm
+INNER JOIN dAntecedentesMedAG AS q ON q.idH_aag=h.idH_atm
+
+ORDER BY l.idL_pte;
+
+
+
+CREATE VIEW verDatosContactoParaRedes AS
+SELECT
+CONCAT(l.nom_pte, " ", l.app_pte, " ", l.apm_pte) AS nombrePaciente,  (YEAR(CURDATE())-YEAR(l.fhn_pte)) - (RIGHT(CURDATE(),5)<RIGHT(l.fhn_pte,5)) AS edad,
+c.tel_con AS telefono, c.mal_con AS email, c.fbk_con AS facebook
+
+FROM mPaciente AS l
+INNER JOIN dContacto AS c ON l.idC_pte=c.idC_con
+
+ORDER BY l.nom_pte;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,58 @@
+INSERT INTO dFechaExpediente (fex_fxp, fac_fxp) VALUES (now(), now());
+
+SELECT @lastIDF := LAST_INSERT_ID();
+
+
+INSERT INTO dResumenClinico (idE_cln, idH_cln, idN_cln, idL_cln, idF_cln) VALUES (1, 2, 2, 2, @lastIDF);
+
+SELECT @lastIDM := LAST_INSERT_ID();
+
+INSERT INTO dPlanManejo (pln_plm, idM_plm) VALUES ("El plan de manejo adulto", @lastIDM);
+
+INSERT INTO dOptometria (rod_opt, roi_opt, rdd_opt, edl_opt, mcn_opt, utr_opt, idM_opt) VALUES 
+                                                ("graduacionOD adulto", "GraduacionOI adulto", "ADD adulto", 5, "motivo adulto", '2011-03-14 15:10:00', @lastIDM);
+
+
+INSERT INTO dOftalmoscopiaDirecta (med_ofd, epp_ofd, clp_ofd, vss_ofd, mcl_ofd, rtp_ofd) VALUES 
+                                    ("Medios adultos 1", 36, "color adulto1", "Vasitos adultos1", "macula adulta1", "otro dato adulto1");
+
+SELECT @lastDOF1 := LAST_INSERT_ID();
+
+INSERT INTO dPruebasPreliminares (acv_pru, scc_pru, cvv_pru, aoo_pru, ccc_pru, pup_pru) VALUES ("ACV1 adulto", "SC1 adulto", "CV1 adulto", "AO1 adulto", "CC1 adulto", "PUP1 adulto");
+
+SELECT @lastIDY1 := LAST_INSERT_ID();
+
+INSERT INTO dPruPrelAdulto (bmm_ppa, rja_ppa, lcw_ppa, idY_ppa) VALUES ("BMM1 adulto", 39, "RJA1 adulto", @lastIDY1);
+
+INSERT INTO dGraduacion (gra_grd_1, gra_grd_2, gra_grd_3, add_grd) VALUES ("GraduacionOD1 adulto", "GraduacionOD2 adulto", "GraduacionOD3 adulto", "ADDod adulto");
+
+SELECT @lastGRD1 := LAST_INSERT_ID();
+
+INSERT INTO dOjoDerecho (dxr_ojd, dxo_ojd, ref_ojd, dgr_ojd, dof_ojd, idY_ojd) VALUES ("dxr1 adulto", "dxo1 adulto", "ref1 adulto", @lastGRD1, @lastDOF1, @lastIDY1);
+
+SELECT @lastIDW := LAST_INSERT_ID();
+
+
+INSERT INTO dOftalmoscopiaDirecta (med_ofd, epp_ofd, clp_ofd, vss_ofd, mcl_ofd, rtp_ofd) VALUES 
+                        ("Medios adultos2", 98, "Color adulto2", "Vasitos adultos2", "macula adulta 2", "otro dato adulto2");
+
+SELECT @lastDOF2 := LAST_INSERT_ID();
+
+INSERT INTO dPruebasPreliminares (acv_pru, scc_pru, cvv_pru, aoo_pru, ccc_pru, pup_pru) VALUES ("acv2 adulto", "sc2 adulto", "cv2 adulto", "ao2 adulto", "cc2 adulto", "pup2 adulto");
+
+SELECT @lastIDY2 := LAST_INSERT_ID();
+
+INSERT INTO dPruPrelAdulto (bmm_ppa, rja_ppa, lcw_ppa, idY_ppa) VALUES ("bmm2 adulto", 42, "lcw2 adulto", @lastIDY2);
+
+INSERT INTO dGraduacion (gra_grd_1, gra_grd_2, gra_grd_3, add_grd) VALUES ("GraduacionOI1 adulto", "GraduacionOI2 adulto", "GraduacionOI3 adulto", "ADDoi adulto");
+
+SELECT @lastGRD2 := LAST_INSERT_ID();
+
+INSERT INTO dOjoIzquierdo (dxr_oji, dxo_oji, ref_oji, dgr_oji, dof_oji, idY_oji) VALUES ("dxr2 adulto", "dxo2 adulto", "ref2 adulto", @lastGRD2, @lastDOF2, @lastIDY2);
+
+SELECT @lastIDZ := LAST_INSERT_ID();
+
+
+INSERT INTO dDiagnostico (foo_dia, nog_dia, hra_dia, idM_dia, idW_dia, idZ_dia) VALUES 
+            ("Medicina adulta", 3, '09:50:00', @lastIDM, @lastIDW, @lastIDZ);
+

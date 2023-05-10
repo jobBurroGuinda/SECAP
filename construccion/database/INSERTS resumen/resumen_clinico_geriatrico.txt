@@ -1,0 +1,58 @@
+INSERT INTO dFechaExpediente (fex_fxp, fac_fxp) VALUES (now(), now());
+
+SELECT @lastIDF := LAST_INSERT_ID();
+
+
+INSERT INTO dResumenClinico (idE_cln, idH_cln, idN_cln, idL_cln, idF_cln) VALUES (1, 3, 3, 3, @lastIDF);
+
+SELECT @lastIDM := LAST_INSERT_ID();
+
+INSERT INTO dPlanManejo (pln_plm, idM_plm) VALUES ("El paciente necesita buena dosis de chanclitis aguda en ayunas", @lastIDM);
+
+INSERT INTO dOptometria (rod_opt, roi_opt, rdd_opt, edl_opt, mcn_opt, utr_opt, idM_opt) VALUES 
+                                                ("+34.2 -34.2 +23.9", "+14.2 -33.2 -43.9", "+2 +45 -2.56", 5, "Dolor de nalgas", '2015-08-23 12:08:00', @lastIDM);
+
+
+INSERT INTO dOftalmoscopiaDirecta (med_ofd, epp_ofd, clp_ofd, vss_ofd, mcl_ofd, rtp_ofd) VALUES 
+                                    ("Medios asignados", 23, "marillento", "Vasitos amarillos", "ML 98+", "JK 989");
+
+SELECT @lastDOF1 := LAST_INSERT_ID();
+
+INSERT INTO dPruebasPreliminares (acv_pru, scc_pru, cvv_pru, aoo_pru, ccc_pru, pup_pru) VALUES ("898u", "89k89", "m89u89", "gt78", "5g656", "89m89");
+
+SELECT @lastIDY1 := LAST_INSERT_ID();
+
+INSERT INTO dPruPreGeriatrico (boo_ppg, rja_ppg, rla_ppg, idY_ppg) VALUES ("grt55", 75, "h565", @lastIDY1);
+
+INSERT INTO dGraduacion (gra_grd_1, gra_grd_2, gra_grd_3, add_grd) VALUES ("+32.2", "-89", "+23", "+12");
+
+SELECT @lastGRD1 := LAST_INSERT_ID();
+
+INSERT INTO dOjoDerecho (dxr_ojd, dxo_ojd, ref_ojd, dgr_ojd, dof_ojd, idY_ojd) VALUES ("-89", "+24", "+89.2", @lastGRD1, @lastDOF1, @lastIDY1);
+
+SELECT @lastIDW := LAST_INSERT_ID();
+
+
+INSERT INTO dOftalmoscopiaDirecta (med_ofd, epp_ofd, clp_ofd, vss_ofd, mcl_ofd, rtp_ofd) VALUES 
+                        ("Medios asignados", 23, "marillento", "Vasitos amarillos", "ML 98+", "JK 989");
+
+SELECT @lastDOF2 := LAST_INSERT_ID();
+
+INSERT INTO dPruebasPreliminares (acv_pru, scc_pru, cvv_pru, aoo_pru, ccc_pru, pup_pru) VALUES ("f3f34", "jh56h5he", "ldjk893", "ns4rs4i", "kkfhk83", "ske8r48j");
+
+SELECT @lastIDY2 := LAST_INSERT_ID();
+
+INSERT INTO dPruPreGeriatrico (boo_ppg, rja_ppg, rla_ppg, idY_ppg) VALUES ("sfr4 344", 29, "h56h5", @lastIDY2);
+
+INSERT INTO dGraduacion (gra_grd_1, gra_grd_2, gra_grd_3, add_grd) VALUES ("+32.2", "-89", "+23", "+12");
+
+SELECT @lastGRD2 := LAST_INSERT_ID();
+
+INSERT INTO dOjoIzquierdo (dxr_oji, dxo_oji, ref_oji, dgr_oji, dof_oji, idY_oji) VALUES ("-89", "+24", "+89.2", @lastGRD2, @lastDOF2, @lastIDY2);
+
+SELECT @lastIDZ := LAST_INSERT_ID();
+
+
+INSERT INTO dDiagnostico (foo_dia, nog_dia, hra_dia, idM_dia, idW_dia, idZ_dia) VALUES 
+            ("Meditilina arcainosacosa", 3, '13:00:00', @lastIDM, @lastIDW, @lastIDZ);
+

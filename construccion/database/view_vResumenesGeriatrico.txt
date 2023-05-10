@@ -1,0 +1,41 @@
+CREATE VIEW vResumenesGeriatricos AS 
+SELECT
+n.idN_exp AS idExpediente, n.fol_exp AS folio, m.idM_cln AS idRecumenClinico, l.idL_pte AS idPaciente, l.nom_pte AS nomPaciente, l.app_pte AS apePaternoPaciente, l.apm_pte AS apeMaternoPaciente,
+f.idF_fxp AS idFechasResumen, f.fex_fxp AS fechaExpResumen, f.fac_fxp AS fechaActResumen, 
+b.idB_opt AS idOptometria, b.utr_opt AS fechaUltimaRevision, b.rod_opt AS rxOjoDerecho, b.roi_opt AS rxOjoIzquierdo, ojod.ref_ojd AS refraccionOD, ojoi.ref_oji AS refraccionOI,
+                    b.edl_opt AS edadDesdeQueUsaLentes, b.mcn_opt AS motivoConsulta, 
+    yod.idY_pru AS idPruebasPreliminaresOD, yod.acv_pru AS AVod, yod.scc_pru AS SCod, yod.cvv_pru AS CVod, yod.aoo_pru AS AOod, yod.ccc_pru AS CCod, yod.pup_pru AS PUPod, 
+            god.dpg_ppg AS idPrueGeriatricoOD, god.boo_ppg AS bicroOD, god.rja_ppg AS relojAstOD, god.rla_ppg AS rejillaOD, 
+    yoi.idY_pru AS idPruebasPreliminaresOI, yoi.acv_pru AS AVoi, yoi.scc_pru AS SCoi, yoi.cvv_pru AS CVoi, yoi.aoo_pru AS AOoi, yoi.ccc_pru AS CCoi, yoi.pup_pru AS PUPoi, 
+            goi.dpg_ppg AS idPrueGeriatricoOI, goi.boo_ppg AS bicroOI, goi.rja_ppg AS relojAstOI, goi.rla_ppg AS rejillaOI, 
+odd.dof_ofd AS idOftalmoscopiaOD, odd.med_ofd AS mediosOD, odd.epp_ofd AS EPod, odd.clp_ofd AS colorpOD, odd.vss_ofd AS vasosOD, odd.mcl_ofd AS maculaOD, odd.rtp_ofd AS retinaPerifericaOD, 
+odi.dof_ofd AS idOftalmoscopiaOI, odi.med_ofd AS mediosOI, odi.epp_ofd AS EPoi, odi.clp_ofd AS colorpOI, odi.vss_ofd AS vasosOI, odi.mcl_ofd AS maculaOI, odi.rtp_ofd AS retinaPerifericaOI, 
+grod.dgr_grd AS idGraduacionOD, grod.gra_grd_1 AS graduacion1OD,  grod.gra_grd_2 AS graduacion2OD,  grod.gra_grd_3 AS graduacion3OD, 
+                ojod.idW_ojd AS idOjoDerecho, ojod.dxr_ojd AS dxRefractivoOD, ojod.dxo_ojd AS dxOrganicoOD,
+groi.dgr_grd AS idGraduacionOI, groi.gra_grd_1 AS graduacion1OI,  groi.gra_grd_2 AS graduacion2OI,  groi.gra_grd_3 AS graduacion3OI, 
+                ojoi.idZ_oji AS idOjoIzquierdo, ojoi.dxr_oji AS dxRefractivoOI, ojoi.dxo_oji AS dxOrganicoOI,
+diagn.ddi_dia AS idDiagnostico, diagn.foo_dia AS farmaco, diagn.nog_dia AS numGotas, diagn.hra_dia AS hora, dplanm.dpm_plm AS idPlanManejo, dplanm.pln_plm AS planManejo, 
+esp.idE_esp AS idEspecialista, CONCAT(esp.nom_esp, ' ', esp.app_esp, ' ', esp.apm_esp) AS nombreEspecialista
+
+
+FROM dExpediente AS n 
+INNER JOIN dResumenClinico AS m ON n.idN_exp=m.idN_cln
+INNER JOIN mPaciente AS l ON m.idL_cln=l.idL_pte
+INNER JOIN dFechaExpediente AS f ON f.idF_fxp=m.idF_cln
+INNER JOIN dOptometria AS b ON m.idM_cln=b.idM_opt
+INNER JOIN dDiagnostico AS diagn ON diagn.idM_dia=m.idM_cln
+INNER JOIN dOjoDerecho AS ojod ON ojod.idW_ojd=diagn.ddi_dia
+INNER JOIN dOjoIzquierdo AS ojoi ON ojoi.idZ_oji=diagn.idZ_dia
+INNER JOIN dPruebasPreliminares AS yod ON yod.idY_pru=ojod.idY_ojd
+INNER JOIN dPruPreGeriatrico AS god ON god.idY_ppg=yod.idY_pru
+INNER JOIN dPruebasPreliminares AS yoi ON yoi.idY_pru=ojoi.idY_oji
+INNER JOIN dPruPreGeriatrico AS goi ON goi.idY_ppg=yoi.idY_pru
+INNER JOIN dOftalmoscopiaDirecta AS odd ON ojod.dof_ojd=odd.dof_ofd
+INNER JOIN dOftalmoscopiaDirecta AS odi ON ojoi.dof_oji=odi.dof_ofd
+INNER JOIN dGraduacion AS grod ON grod.dgr_grd=ojod.dgr_ojd
+INNER JOIN dGraduacion AS groi ON groi.dgr_grd=ojoi.dgr_oji
+INNER JOIN dPlanManejo AS dplanm ON dplanm.idM_plm=m.idM_cln
+INNER JOIN mEspecialista AS esp ON esp.idE_esp=m.idE_cln
+
+ORDER BY m.idM_cln;
+
